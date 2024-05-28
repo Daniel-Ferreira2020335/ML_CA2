@@ -71,3 +71,25 @@ regressor.fit(X_train, y_train)
 y_pred = regressor.predict(X_test)
 mae_regressor = mean_absolute_error(y_test, y_pred)
 print(f"Linear Regression Mean Absolute Error is: {mae_regressor}")
+
+
+new_customer_data = {
+    'Age': 47,
+    'Experience(Years)': 3,
+    'Sort Code': 96754,
+    'Family': 3,
+    'Credit Score': 1.8,
+    'Education': 'Degree',
+    'Mortgage(Thousands\'s)': 80,
+    'Personal Loan': 'No',
+    'Securities Account': 'No',
+    'CD Account': 'No',
+    'Online Banking': 'Yes',
+    'CreditCard': 'No'
+}
+new_customer_dataframe = pd.DataFrame([new_customer_data])
+processed_new_customer_data = preprocessor.transform(new_customer_dataframe)
+nn_predict = model.predict(processed_new_customer_data)
+print(f"Neural Network predicted an income of: {nn_predict[0][0]}")
+lr_predict = regressor.predict(processed_new_customer_data)
+print(f"Linear Regression predicted an income of: {lr_predict[0]}")
