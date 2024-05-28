@@ -1,2 +1,22 @@
 pip install pandas scikit-learn tensorflow numpy
 
+
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler, OneHotEncoder
+from sklearn.compose import ColumnTransformer
+from sklearn.pipeline import Pipeline
+import numpy as np
+data = pd.read_csv('BankRecords.csv')
+print(data.isnull().sum())
+categorical_columns = ['Education', 'Personal Loan', 'Securities Account', 'CD Account', 'Online Banking', 'CreditCard']
+numerical_columns = ['Age', 'Experience(Years)', 'Family', 'Credit Score', 'Mortgage(Thousands\'s)']
+preprocessor = ColumnTransformer(
+    transformers=[
+        ('num', StandardScaler(), numerical_columns),
+        ('cat', OneHotEncoder(), categorical_columns)])
+X = data.drop('Income(Thousands\'s)', axis=1)
+y = data['Income(Thousands\'s)']
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=35)
+X_train = preprocessor.fit_transform(X_train)
+X_test = preprocessor.transform(X_test)
