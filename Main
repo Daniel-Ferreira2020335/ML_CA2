@@ -143,3 +143,28 @@ def get_sentiment(text):
 data['sentiment'] = data['clean_text'].apply(get_sentiment)
 print(data['sentiment'].value_counts())
 
+
+
+#visualization
+
+
+import seaborn as sns
+plt.figure(figsize=(8,6))
+sns.countplot(x='sentiment', hue='sentiment', data=data, palette='viridis', dodge=False, legend=False)
+plt.title('Sentiment Distribution')
+plt.xlabel('Sentiment')
+plt.ylabel('Count')
+plt.show()
+positive_text = ' '.join(data[data['sentiment'] == 'positive']['clean_text'])
+neutral_text = ' '.join(data[data['sentiment'] == 'neutral']['clean_text'])
+negative_text = ' '.join(data[data['sentiment'] == 'negative']['clean_text'])
+def plot_wordcloud(text, title):
+    wordcloud = WordCloud(width=800, height=400, max_font_size=100, max_words=100, background_color='white').generate(text)
+    plt.figure(figsize=(10,8))
+    plt.imshow(wordcloud, interpolation='bilinear')
+    plt.title(title)
+    plt.axis('off')
+    plt.show()
+plot_wordcloud(positive_text, 'Positive Sentiment Word Cloud')
+plot_wordcloud(neutral_text, 'Neutral Sentiment Word Cloud')
+plot_wordcloud(negative_text, 'Negative Sentiment Word Cloud')
