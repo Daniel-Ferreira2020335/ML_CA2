@@ -34,6 +34,27 @@ def create_model():
     model.add(Dense(1))
     model.compile(optimizer='adam', loss='mean_squared_error', metrics=['mae'])
     return model
+
+
+
+
+
+import tensorflow as tf
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dense, Input
+def create_model():
+    model = Sequential()
+    model.add(Input(shape=(X_train.shape[1],)))
+    model.add(Dense(64, activation='relu'))
+    model.add(Dense(32, activation='relu'))
+    model.add(Dense(1))
+    model.compile(optimizer='adam', loss='mean_squared_error', metrics=['mae'])
+    return model
+model = create_model()
+model.summary()
+history = model.fit(X_train, y_train, validation_split=0.2, epochs=100, batch_size=36, verbose=1)
+loss, mae = model.evaluate(X_test, y_test, verbose=0)
+print(f"Neural Network Mean Absolute Error is: {mae}")
 model = create_model()
 model.summary()
 history = model.fit(X_train, y_train, validation_split=0.2, epochs=100, batch_size=36, verbose=1)
