@@ -126,3 +126,20 @@ def preprocess_text(text):
     text = text.strip() 
     return text
 data['clean_text'] = data['text'].apply(preprocess_text)
+
+
+#Sentiment Analysis
+
+
+from textblob import TextBlob
+def get_sentiment(text):
+    analysis = TextBlob(text)
+    if analysis.sentiment.polarity > 0:
+        return 'positive'
+    elif analysis.sentiment.polarity == 0:
+        return 'neutral'
+    else:
+        return 'negative'
+data['sentiment'] = data['clean_text'].apply(get_sentiment)
+print(data['sentiment'].value_counts())
+
